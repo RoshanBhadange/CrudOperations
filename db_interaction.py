@@ -16,13 +16,10 @@ class crud_ops():
         self.conn = psycopg2.connect(host=host, database=database, user=user, password=password, port=port)
         self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-
-        #print("args are "+ self.method, self.id_data, self.name_data)
-
-    def execute_query(self,sql,result):
+    def execute_query(self,sql,res_flag):
         self.cur.execute(sql)
         lst = []
-        if result:
+        if res_flag:
             ans =self.cur.fetchall()
             if len(ans)>0:
                 for row in ans:
@@ -30,14 +27,6 @@ class crud_ops():
                     lst.append(rec)
         self.conn.commit()
         return lst
-
-
-    def get_resultset(self,ans):
-        lst = []
-        for row in ans:
-            lst.append(row)
-        return lst
-
 
     def create_data(self):
         id_data = self.data[2]
